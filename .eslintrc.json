@@ -1,3 +1,35 @@
 {
-  "extends": "next/core-web-vitals"
+  "extends": ["next/core-web-vitals", "eslint:recommended"],
+  "env": {
+    "browser": true,
+    "es2021": true
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": "latest",
+    "sourceType": "module",
+    "project": ["./tsconfig.json"]
+  },
+  "plugins": ["@typescript-eslint", "prettier"],
+  "rules": {
+    "semi": "warn",
+    "indent": "warn",
+    "no-multi-spaces": "warn",
+    "space-in-parens": "warn",
+    "no-multiple-empty-lines": "warn",
+    "prefer-const": "warn",
+    "prefer-template": "warn",
+    "@typescript-eslint/no-explicit-any": "off",
+    "@typescript-eslint/no-unused-vars": "off",
+    "@typescript-eslint/no-loss-of-precision": "off",
+    "quotes": ["warn", "double", { "avoidEscape": true }],
+    "no-case-declarations": 0,
+    "no-nested-ternary": "error",
+    "no-unused-vars": "off"
+  },
+  "settings": {
+    "node": {
+      "extensions": [".ts", ".tsx", ".json"]
+    }
+  }
 }
