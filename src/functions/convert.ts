@@ -16,9 +16,6 @@ export function findConversionRate(
         fromCurrencyPriceUSD,
         toCurrencyPriceUSD
     );
-
-    // Round the result to 5 decimal places
-    // const roundedRate = bigDecimal.round(conversionRate, 5);
     return Number(conversionRate);
 }
 
@@ -26,6 +23,7 @@ export const convertCurrency = (
     amount: number,
     first: ICurrencyData,
     second: ICurrencyData,
+    convertRate?: number
 ) => {
     if (
         first.values.USD.price === undefined ||
@@ -34,7 +32,7 @@ export const convertCurrency = (
         return undefined;
     }
     console.log("Amount:", amount, first, second);
-    const rate = findConversionRate(
+    const rate = convertRate || findConversionRate(
         first.values.USD.price,
         second.values.USD.price,
     );

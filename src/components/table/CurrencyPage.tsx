@@ -6,6 +6,7 @@ import { CurrencyTable } from "@/components/table/CurrencyTable";
 import { useSearchParams } from "next/navigation";
 import { PAGE_SIZE } from "@/constants";
 import { LoadingSceleton } from "@/components/LoadingSceleton";
+import {StyledMainFlexBox} from "@/components/styled";
 
 export const CurrencyPage = () => {
     const params = useSearchParams();
@@ -21,10 +22,8 @@ export const CurrencyPage = () => {
             }),
     );
 
-    if (isLoading) return <LoadingSceleton />;
-    if (error) {
-        console.log("error:", error, data);
-        return "error";
+    if (isLoading) {
+        return <StyledMainFlexBox> <LoadingSceleton /> </StyledMainFlexBox>;
     }
 
     return data?.items ? <CurrencyTable data={data?.items || []} /> : null;

@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { ICurrencyData } from "@/type";
 import {convertCurrency, findConversionRate} from "@/functions";
-import { CurrencyInputContainer } from "@/components/CurrencyInputContainer";
+import { CurrencyInputContainer } from "@/components/converter/CurrencyInputContainer";
 import { CurrencySelect } from "@/components/select/CurrencySelect";
 import SwapIcon from "../../icons/swap.svg";
 import Image from "next/image";
@@ -17,7 +17,7 @@ function getCurrencyBySymbol(
 }
 
 export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
-    const [currencyValue, setCurrencyValue] = useState(0);
+    const [currencyValue, setCurrencyValue] = useState<string | undefined>();
     const [convertedValue, setConvertedValue] = useState<string | undefined>();
     const [firstCurrency, setFirstCurrency] = useState<
         ICurrencyData | undefined
@@ -25,7 +25,8 @@ export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
     const [secondCurrency, setSecondCurrency] = useState<
         ICurrencyData | undefined
     >(() => getCurrencyBySymbol(data, "ETH"));
-    const [rate, setRate] = useState<string>();
+    const [rateFromFirstToSecond, setRateFromFirstToSecond] = useState<string>();
+    const [rateFromSecondToFirst, setRateFromSecondToFirst] = useState<string>();
 
     useEffect(() => {
         if (firstCurrency && secondCurrency) {
@@ -33,7 +34,12 @@ export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
                 firstCurrency.values.USD.price,
                 secondCurrency.values.USD.price,
             );
-            setRate(getPrettyValueOfNumber(currencyRate));
+            const currencyRateSecond = findConversionRate(
+                secondCurrency.values.USD.price,
+                firstCurrency.values.USD.price
+            );
+            setRateFromFirstToSecond(getPrettyValueOfNumber(currencyRate));
+            setRateFromSecondToFirst(getPrettyValueOfNumber(currencyRateSecond));
         }
     }, [firstCurrency, secondCurrency]);
     const onConvert = (
@@ -41,30 +47,23 @@ export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
         firstCur: ICurrencyData,
         secondCur: ICurrencyData,
     ) => {
-        console.log("Convert value:", value);
         if (firstCur && secondCur) {
-            const converted = convertCurrency(value, firstCur, secondCur);
-            console.log("Converted:", converted);
-            //  const convertedPrettyValue = getPrettyValueOfNumber(Number(converted?.converted));
-            converted?.converted && setConvertedValue(String(converted?.converted));
+            const convertedResult = convertCurrency(value, firstCur, secondCur);
+            convertedResult && setConvertedValue(String(convertedResult.converted));
         }
     };
 
     useEffect(() => {
         const timeoutId = setTimeout(() => {
             if (secondCurrency && firstCurrency) {
-                console.log("CurrencyValue:", currencyValue);
-                onConvert(currencyValue, firstCurrency, secondCurrency);
+                onConvert(currencyValue ? Number(currencyValue) : 0, firstCurrency, secondCurrency);
             }
         }, 500);
         return () => clearTimeout(timeoutId);
     }, [currencyValue, firstCurrency, secondCurrency]);
 
     const onInput = (newValue: string) => {
-        console.log("Input newValue:", newValue);
-        const value = parseFloat(newValue);
-        console.log("Event:", newValue, value);
-        setCurrencyValue(value);
+        setCurrencyValue(newValue);
     };
 
     const onChangeFirstCurrency = (newValue: ICurrencyData) => {
@@ -84,10 +83,10 @@ export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
     return (
         <FlexBoxRow>
             <CurrencyInputContainer
-                currencyValue={String(currencyValue)}
+                currencyValue={currencyValue ? String(currencyValue) : ""}
                 onChangeInput={onInput}
-                text={firstCurrency && secondCurrency && rate ?
-                    `1 ${firstCurrency?.symbol} = ${rate} ${secondCurrency?.symbol}` : ""}
+                text={firstCurrency && secondCurrency && rateFromFirstToSecond ?
+                    `1 ${firstCurrency?.symbol} = ${rateFromFirstToSecond} ${secondCurrency?.symbol}` : ""}
             >
                 <CurrencySelect
                     value={firstCurrency}
@@ -105,6 +104,8 @@ export const ConverterComponent = ({ data }: { data: ICurrencyData[] }) => {
                 />
             </StyledBlueButton>
             <CurrencyInputContainer
+                text={firstCurrency && secondCurrency && rateFromSecondToFirst ?
+                    `1 ${secondCurrency?.symbol} = ${rateFromSecondToFirst} ${firstCurrency?.symbol}` : ""}
                 currencyValue={convertedValue}
                 readonly={true}
             >

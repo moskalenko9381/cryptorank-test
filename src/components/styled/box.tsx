@@ -7,7 +7,7 @@ export const StyledOptionLabel = styled.div`
     line-height: 0;
 `;
 export const StyledRow = styled.div`
-    padding-top: 2em;
+    padding-top: 6em;
     display: flex;
     justify-items: center;
     align-items: center;
@@ -52,6 +52,15 @@ export const StyledInputContainer = styled.div`
     }
 `;
 
+export const StyledInputWrapper = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    border-bottom: 1px solid #8e9aaf;
+    align-items: center;
+    justify-content: space-between;
+`;
+
 export const FlexBoxRow = styled.div`
     display: flex;
     padding: 1em;
@@ -63,19 +72,7 @@ export const FlexBoxRow = styled.div`
     align-items: center;
     justify-content: center;
     border-radius: 25px;
-    // ${StyledInputContainer}:first-of-type {
-    //     margin-left: 4em;
-    // }
-    // ${StyledInputContainer}:last-of-type {
-    //     margin-right: 4em;
-    // }
     @media (max-width: 1200px) {
-        // ${StyledInputContainer}:first-of-type {
-        //     margin-left: 0;
-        // }
-        // ${StyledInputContainer}:last-of-type {
-        //     margin-right: 0;
-        // }
         flex-direction: column;
     }
     gap: 2em;
@@ -93,4 +90,17 @@ export const ScrollableDiv = styled.div`
     padding-left: 2em;
     padding-right: 2em;
     padding-bottom: 2em;
+`;
+
+export const StyledMainBlock = styled.div`
+    height: 100%;
+    font-size: 20px;
+    color: #577590;
+`;
+
+export const StyledMainFlexBox = styled(StyledMainBlock)`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 `;

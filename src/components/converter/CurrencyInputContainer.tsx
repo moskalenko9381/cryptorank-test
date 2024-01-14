@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import bigDecimal from "js-big-decimal";
-import { StyledInput, StyledInputContainer } from "@/components/styled";
+import {StyledInput, StyledInputContainer, StyledInputWrapper} from "@/components/styled";
 import { getPrettyValueOfNumber } from "@/functions/pretty";
 
 interface IProps {
@@ -14,7 +14,7 @@ interface IProps {
 export const CurrencyInputContainer = (props: IProps) => {
     const { readonly, text, currencyValue, onChangeInput, children } = props;
 
-    const [numericValue, setNumericValue] = useState<string | undefined>();
+    const [numericValue, setNumericValue] = useState<string>();
     useEffect(() => {
         setNumericValue(currencyValue || "");
     }, [currencyValue]);
@@ -32,7 +32,6 @@ export const CurrencyInputContainer = (props: IProps) => {
 
     const onKeyDown = useCallback(
         (event: React.KeyboardEvent) => {
-            console.log(event.code, numericValue);
             if (event.code === "Period") {
                 if (!numericValue || numericValue.indexOf(".") > 0) {
                     event.preventDefault();
@@ -44,7 +43,7 @@ export const CurrencyInputContainer = (props: IProps) => {
                 event.code !== "Period" &&
                 event.code !== "ArrowLeft" &&
                 event.code !== "ArrowRight" &&
-                event.code.indexOf("Digit") < 0
+                !event.code.includes("Digit")
             ) {
                 event.preventDefault();
             }
@@ -66,9 +65,7 @@ export const CurrencyInputContainer = (props: IProps) => {
 
     return (
         <StyledInputContainer>
-            <div
-                style={{ width: "100%", display: "flex", flexDirection: "row" }}
-            >
+            <StyledInputWrapper>
                 <StyledInput
                     placeholder={"0"}
                     value={prettyValue}
@@ -76,8 +73,8 @@ export const CurrencyInputContainer = (props: IProps) => {
                     onKeyDown={onKeyDown}
                     onChange={onChange}
                 />
-                {text && <span> {text} </span>}
-            </div>
+                {text && <span style={{paddingRight: "1em"}}> {text} </span>}
+            </StyledInputWrapper>
             {children}
         </StyledInputContainer>
     );

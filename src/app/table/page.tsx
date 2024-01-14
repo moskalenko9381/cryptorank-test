@@ -5,7 +5,7 @@ import React from "react";
 import { SWRProvider } from "@/components/util/SWRProvider";
 import { PAGE_SIZE } from "@/constants";
 import { Pagination } from "@/components/table/Pagination";
-import { StyledHeader } from "@/components/styled";
+import {StyledHeader} from "@/components/styled";
 
 export default async function Page({
     searchParams,
@@ -27,12 +27,12 @@ export default async function Page({
             searchParams?.page === "1" ||
             isNaN(Number(searchParams?.page)) ||
             Number(searchParams?.page) < 0 ? (
-                    <CurrencyTable data={data.items} />
+                    <CurrencyTable data={data?.items || []} />
                 ) : undefined}
             <CurrencyPage />
             <Pagination
                 totalCountPages={
-                    data.meta.count && Math.ceil(data.meta.count / PAGE_SIZE)
+                    data?.meta?.count && Math.ceil(data.meta.count / PAGE_SIZE)
                 }
             />
         </SWRProvider>
