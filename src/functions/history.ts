@@ -2,20 +2,20 @@ import { ICurrencyPrice } from "@/type";
 import bigDecimal from "js-big-decimal";
 import { CURRENCY_FORMAT } from "@/constants";
 
-function calculate(percents: number, currentValue: number) {
-    if (percents === 0) {
-        return String(currentValue);
-    }
-    if (!percents) {
+export function calculate(percents: number | undefined, currentValue: number) {
+    if (typeof percents === "undefined" || percents < -100) {
         return undefined;
     }
-    const updatedPercents = bigDecimal.add(bigDecimal.divide(percents, 100), 1);
-    const historicalPrice = Number(
-        bigDecimal.multiply(updatedPercents, String(currentValue)),
-    );
-    return historicalPrice >= 1
+    if (percents === 0) {
+        return bigDecimal.round(currentValue, 2);
+    }
+    const currentPercentsFromPast = 100 + percents; // 100 + (-1.001)
+    const valueMultiplied100 = bigDecimal.multiply(currentValue, 100);
+    const historicalPrice = bigDecimal.divide(valueMultiplied100, currentPercentsFromPast);
+    const priceToNumber = Number(historicalPrice);
+    return priceToNumber >= 1
         ? bigDecimal.round(historicalPrice, 2)
-        : CURRENCY_FORMAT.format(historicalPrice);
+        : CURRENCY_FORMAT.format(priceToNumber);
 }
 
 export function calculateHistoricalPrice(data: ICurrencyPrice) {

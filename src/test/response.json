@@ -1,0 +1,44 @@
+{
+  "data": [
+    {
+      "id": 1,
+      "rank": 1,
+      "slug": "bitcoin",
+      "name": "Bitcoin",
+      "symbol": "BTC",
+      "category": "Currency",
+      "type": "coin",
+      "volume24hBase": 208850.7819,
+      "circulatingSupply": 19599231,
+      "totalSupply": 21000000,
+      "maxSupply": 21000000,
+      "values": {
+        "USD": {
+          "price": 42622.20899026462,
+          "volume24h": 8901681673,
+          "high24h": 42986.27811801491,
+          "low24h": 41774.255365650344,
+          "marketCap": 835362519730.473,
+          "percentChange24h": -0.4168,
+          "percentChange7d": -5.3862,
+          "percentChange30d": 0.4991,
+          "percentChange3m": 49.4641,
+          "percentChange6m": 41.3397
+        }
+      },
+      "lastUpdated": "2024-01-15T12:22:27.186Z",
+      "tokens": []
+    }
+  ],
+  "meta": {
+    "count": 6059
+  },
+  "status": {
+    "time": "2024-01-15T12:23:05.638Z",
+    "success": true,
+    "code": 200,
+    "message": "OK",
+    "responseTime": 44,
+    "creditsCost": 1
+  }
+}

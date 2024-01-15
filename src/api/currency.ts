@@ -44,7 +44,7 @@ export async function fetchCurrencyWithMeta(key?: {
             meta: json.meta,
         };
     } catch (e) {
-        console.error("Error:", (e as Error).message);
+        console.log("Error:", (e as Error).message);
         return { items: [] };
     }
 }
