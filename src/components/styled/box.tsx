@@ -5,6 +5,9 @@ export const StyledOptionLabel = styled.div`
     display: flex;
     flex-wrap: wrap;
     line-height: 1;
+`;
+
+export const StyledOptionLabelWithMargin = styled(StyledOptionLabel)`
     p {
         margin-block-start: 0;
         &:last-of-type {

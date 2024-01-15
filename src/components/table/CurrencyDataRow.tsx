@@ -9,7 +9,7 @@ export const CurrencyDataRow = ({ item }: { item: ICurrencyData }) => {
     return (
         <StyledTr key={item.id}>
             <StyledStickyTd>
-                <OptionLabel item={item} />
+                <OptionLabel margin item={item} />
             </StyledStickyTd>
             <td>
                 <p> {item.category || ""} </p>
