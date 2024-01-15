@@ -1,5 +1,6 @@
 body {
     margin: 0;
-    width: max-content;
-    min-width: 100%;
+    paddding: 0;
+    /*width: min-content;*/
+    width: 100%;
 }

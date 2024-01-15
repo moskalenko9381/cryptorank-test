@@ -12,13 +12,15 @@ import {
 
 export const Pagination = ({
     totalCountPages,
+    isFirstPage
 }: {
     totalCountPages?: number;
+    isFirstPage: boolean
 }) => {
     const params = useSearchParams();
     const { replace } = useRouter();
     const pathname = usePathname();
-    const page = Number(params.get("page")) || 1;
+    const page = isFirstPage ? 1 : (Number(params.get("page")) || 1);
 
     const changePage = useCallback(
         (newPage: number) => {
@@ -34,7 +36,7 @@ export const Pagination = ({
         const previousPages = [];
         let maxPage;
         if (page > 0) {
-            for (let i = 3; i > 0; i--) {
+            for (let i = 2; i > 0; i--) {
                 if (page - i > 0) {
                     previousPages.push(page - i);
                 }
@@ -43,7 +45,7 @@ export const Pagination = ({
         if (totalCountPages) {
             maxPage = totalCountPages;
             if (page < maxPage) {
-                for (let i = 1; i < 4; i++) {
+                for (let i = 1; i < 3; i++) {
                     if (page + i > maxPage) {
                         break;
                     }

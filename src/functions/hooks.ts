@@ -1,4 +1,5 @@
-import { useMemo } from "react";
+"use client";
+import {useLayoutEffect, useMemo, useState} from "react";
 import { ICurrencyData } from "@/type";
 import { getPrettyValueOfNumber } from "@/functions/pretty";
 
@@ -32,3 +33,37 @@ export const useCurrencyData = (item: ICurrencyData) => {
         item.historicalPrice6m,
     ]);
 };
+
+
+export function useWindowPosition() {
+    const [scrollPosition, setPosition] = useState(0);
+    useLayoutEffect(() => {
+        function updatePosition() {
+            setPosition(window.scrollY);
+        }
+        window.addEventListener("scroll", updatePosition);
+        updatePosition();
+        return () => window.removeEventListener("scroll", updatePosition);
+    }, []);
+    return scrollPosition;
+}
+
+export function usePositionOfContainer(className: string) {
+
+    const [scrollPosition, setPosition] = useState(0);
+    useLayoutEffect(() => {
+        function updatePosition() {
+            const container = document.getElementsByClassName(className);
+            if (!container || !container.length) {
+                setPosition(0);
+                return;
+            }
+            const rect = container.item(0)!.getBoundingClientRect();
+            setPosition(rect.top);
+        }
+        window.addEventListener("scroll", updatePosition);
+        updatePosition();
+        return () => window.removeEventListener("scroll", updatePosition);
+    }, []);
+    return scrollPosition;
+}

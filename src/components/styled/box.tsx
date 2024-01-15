@@ -4,15 +4,21 @@ import styled from "styled-components";
 export const StyledOptionLabel = styled.div`
     display: flex;
     flex-wrap: wrap;
-    line-height: 0;
+    line-height: 1;
+    p {
+        margin-block-start: 0;
+        &:last-of-type {
+            margin-block-end: 0;
+        }
+    }
 `;
 export const StyledRow = styled.div`
-    padding-top: 6em;
+    padding-top: 3em;
     display: flex;
     justify-items: center;
     align-items: center;
     text-align: center;
-    gap: 2em;
+    gap: 1em;
     flex-direction: row;
     position: absolute;
     left: 50%;
@@ -59,6 +65,11 @@ export const StyledInputWrapper = styled.div`
     border-bottom: 1px solid #8e9aaf;
     align-items: center;
     justify-content: space-between;
+    @media (max-width: 1200px) {
+        span {
+            font-size: 10px;
+        }
+    }
 `;
 
 export const FlexBoxRow = styled.div`
@@ -75,32 +86,38 @@ export const FlexBoxRow = styled.div`
     @media (max-width: 1200px) {
         flex-direction: column;
     }
-    gap: 2em;
+    gap: 1.5em;
     flex-wrap: wrap;
     flex-grow: 1;
 `;
 
 export const ScrollableDiv = styled.div`
+    overflow-x: scroll;
     position: relative;
     top: 0;
     display: flex;
-    width: 100%;
+    width: 95%;
+    left: 50%;
+    transform: translateX(-50%);
     background: #fcfff7;
     box-shadow: 2px 2px #fcfff7;
-    padding-left: 2em;
-    padding-right: 2em;
+    //padding-left: 2em;
+    //padding-right: 2em;
     padding-bottom: 2em;
 `;
 
 export const StyledMainBlock = styled.div`
     height: 100%;
     font-size: 20px;
+    @media (max-width: 1200px) {
+        font-size: 16px;
+    }
     color: #577590;
 `;
 
 export const StyledMainFlexBox = styled(StyledMainBlock)`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
 `;

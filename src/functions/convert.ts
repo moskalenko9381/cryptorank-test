@@ -31,12 +31,10 @@ export const convertCurrency = (
     ) {
         return undefined;
     }
-    console.log("Amount:", amount, first, second);
     const rate = convertRate || findConversionRate(
         first.values.USD.price,
         second.values.USD.price,
     );
-    //const firstToUSD = bigDecimal.multiply(first.values.USD.price, amount); // price in USD
     const converted = Number(bigDecimal.multiply(rate, amount));
     if (converted < 1) {
         return { converted, rate };

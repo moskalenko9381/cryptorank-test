@@ -2,14 +2,18 @@
 import { ICurrencyData } from "@/type";
 import { CurrencyDataRow } from "@/components/table/CurrencyDataRow";
 import {FlexBoxRow, ScrollableDiv, StyledTable, StyledText} from "@/components/styled";
+import {usePositionOfContainer} from "@/functions";
 
+const SCROLL_CONTAINER_CLASSNAME = "scrollable-table-div";
 export const CurrencyTable = ({ data }: { data: ICurrencyData[] }) => {
+    const topPosition = usePositionOfContainer(SCROLL_CONTAINER_CLASSNAME);
+
     return (
-        <ScrollableDiv>
+        <ScrollableDiv className={SCROLL_CONTAINER_CLASSNAME}>
             {data.length ?
                 <StyledTable>
                     <thead>
-                        <tr>
+                        <tr style={{top: -topPosition}}>
                             <td> Name</td>
                             <td> Category</td>
                             <td> Price USD</td>

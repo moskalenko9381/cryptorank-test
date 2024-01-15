@@ -16,4 +16,11 @@ export const StyledHeader = styled.h1`
     padding-left: 2em;
     padding-top: 1em;
     padding-bottom: 1em;
+    @media (max-width: 1200px) {
+      font-size: 18px;
+    }
+`;
+export const StyledCenteredHeader = styled(StyledHeader)`
+    padding-left: 0;
+    text-align: center;
 `;
