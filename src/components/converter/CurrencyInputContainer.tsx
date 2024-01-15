@@ -67,6 +67,7 @@ export const CurrencyInputContainer = (props: IProps) => {
         <StyledInputContainer>
             <StyledInputWrapper>
                 <StyledInput
+                    maxLength={20}
                     placeholder={"0"}
                     value={prettyValue}
                     readOnly={readonly}
